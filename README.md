@@ -1,5 +1,6 @@
 # CEPROT
 Here is the relevant code and data for our proposed novel approach CEPROT(Co-Evolution of Production-Test Code).
+Data in master branch.
 # CEPROT
 
 Our model is divided into two stages, identification and generation. And we provide our model and three other baseline models here.
