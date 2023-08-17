@@ -1,0 +1,31 @@
+---
+data_dir: &data_dir dataset/
+result_file: &result_file result.bin
+vocab:
+  vocab_file: !join [*data_dir, mix_vocab.json]
+  vocab_embed: !join [*data_dir, mix_vocab_embeddings.pkl]
+model:
+  model_class: &model_class models.detector.AttnDetector
+  dropout: 0
+  clf_loss_func: models.utils.cross_entropy
+train:
+  train_data: !join [*data_dir, train.jsonl]
+  dev_data: !join [*data_dir, valid.jsonl]
+  model_type: &model_type classifier
+  train_batch_size: &train_batch_size 16
+  valid_batch_size: 16
+  log_every: 100
+  valid_niter: 1300
+  max_epoch: 15
+  max_trial_num: 5
+  save_to: &save_to model.bin
+infer:
+  model_type: *model_type
+  batch_size: 384
+  model_path: *save_to
+  test_set_file: &test_set_file !join [*data_dir, valid.jsonl]
+  output_file: *result_file
+eval:
+  eval_class: ClfEvaluator
+  test_set: *test_set_file
+  result_file: *result_file
